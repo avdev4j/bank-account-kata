@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="avdev" id="00000000000003">
+        <createTable tableName="account">
+            <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="accountPK"/>
+            </column>
+            <column name="balance" type="decimal(19,2)"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="account"
+                                 constraintName="fk_account_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/accounts.csv"
+                  separator=";"
+                  tableName="account">
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
