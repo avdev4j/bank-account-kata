@@ -1,0 +1,11 @@
+version: '2'
+services:
+    bankaccountkata-postgresql:
+        image: postgres:10.4
+        # volumes:
+        #     - ~/volumes/jhipster/bankAccountKata/postgresql/:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=bankAccountKata
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432

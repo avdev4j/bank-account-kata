@@ -1,0 +1,41 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "gitCompany": "",
+    "baseName": "bankAccountKata",
+    "packageName": "io.github.avdev4j.bankaccount",
+    "packageFolder": "io/github/avdev4j/bankaccount",
+    "serverPort": 8080,
+    "serviceDiscoveryType": false,
+    "authenticationType": "jwt",
+    "uaaBaseName": "../uaa",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "enableSwaggerCodegen": false,
+    "messageBroker": false,
+    "buildTool": "maven",
+    "useSass": false,
+    "clientPackageManager": "npm",
+    "testFrameworks": [
+      "protractor"
+    ],
+    "enableTranslation": false,
+    "nativeLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "clientFramework": "angularX",
+    "jhiPrefix": "jhi",
+    "jhipsterVersion": "5.7.0",
+    "jwtSecretKey": "OTY1NDZhZmQ5MzVjMDZlNzMwNGNlYTk1ODRjMTc3ZmI2NWM0ZTAwMWQxZmRiNWY0M2FiMTkyMGZkMjNhM2MzNWJmN2RlOGIyZGJhNzc0OWE2YmIyN2MxZmJlZDk1OWJiNmVlZTNiOTg4MTljMDI4NjdhYTliNjY0NGQ1ZGQwZDg=",
+    "otherModules": []
+  },
+  "git-provider": "GitHub",
+  "git-company": "avdev4j",
+  "repository-name": "bank-account-kata"
+}
