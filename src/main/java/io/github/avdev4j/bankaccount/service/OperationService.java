@@ -4,6 +4,7 @@ import io.github.avdev4j.bankaccount.domain.Account;
 import io.github.avdev4j.bankaccount.domain.Operation;
 import io.github.avdev4j.bankaccount.enumeration.OperationType;
 import io.github.avdev4j.bankaccount.repository.OperationRepository;
+import io.github.avdev4j.bankaccount.web.rest.errors.OperationNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,6 +19,12 @@ public class OperationService implements DepositOperation, WithdrawalOperation {
         this.operationRepository = operationRepository;
         this.accountService = accountService;
     }
+
+    public Operation findById(Long id) {
+        return operationRepository.findById(id)
+            .orElseThrow(OperationNotFoundException::new);
+    }
+
 
     public Operation registerDeposit(Long accountId, BigDecimal amount) {
         Account account = accountService.deposit(accountId, amount);
