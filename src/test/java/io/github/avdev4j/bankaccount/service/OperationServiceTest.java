@@ -47,6 +47,7 @@ public class OperationServiceTest {
         when(accountService.findById(account.getId())).thenReturn(account);
         when(accountService.update(account)).then(returnsFirstArg());
         when(accountService.deposit(anyLong(), any())).thenReturn(account);
+        when(accountService.withdrawal(anyLong(), any())).thenReturn(account);
         when(operationRepository.save(any())).then(returnsFirstArg());
     }
 
@@ -57,6 +58,16 @@ public class OperationServiceTest {
         Assertions.assertThat(operation).isNotNull();
         Assertions.assertThat(operation.getAmount()).isEqualTo(new BigDecimal("250.00"));
         Assertions.assertThat(operation.getType()).isEqualTo(OperationType.DEPOSIT);
+        Assertions.assertThat(operation.getBalanceAfterOperation()).isEqualTo(new BigDecimal("100.00"));
+    }
+
+    @Test
+    public void makeWithdrawalShouldCreateAWithdrawalOperation() {
+        Operation operation = operationService.registerWithdrawal(1L, new BigDecimal("250.00"));
+
+        Assertions.assertThat(operation).isNotNull();
+        Assertions.assertThat(operation.getAmount()).isEqualTo(new BigDecimal("250.00"));
+        Assertions.assertThat(operation.getType()).isEqualTo(OperationType.WITHDRAWAL);
         Assertions.assertThat(operation.getBalanceAfterOperation()).isEqualTo(new BigDecimal("100.00"));
     }
 

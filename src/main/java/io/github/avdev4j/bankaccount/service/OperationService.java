@@ -22,12 +22,34 @@ public class OperationService {
     public Operation registerDeposit(Long accountId, BigDecimal amount) {
         Account account = accountService.deposit(accountId, amount);
 
+        Operation operation = generateDepositOperation(account, amount);
+
+        return operationRepository.save(operation);
+    }
+
+    public Operation registerWithdrawal(Long accountId, BigDecimal amount) {
+        Account account = accountService.withdrawal(accountId, amount);
+
+        Operation operation = generateWithdrawalOperation(account, amount);
+
+        return operationRepository.save(operation);
+    }
+
+    private Operation generateDepositOperation(Account account, BigDecimal amount) {
+        return generateOperation(account, amount, OperationType.DEPOSIT);
+    }
+
+    private Operation generateWithdrawalOperation(Account account, BigDecimal amount) {
+        return generateOperation(account, amount, OperationType.WITHDRAWAL);
+    }
+
+    private Operation generateOperation(Account account, BigDecimal amount, OperationType type) {
         Operation operation = new Operation();
         operation.setAccount(account);
         operation.setAmount(amount);
-        operation.setType(OperationType.DEPOSIT);
+        operation.setType(type);
         operation.setBalanceAfterOperation(account.getBalance());
 
-        return operationRepository.save(operation);
+        return operation;
     }
 }

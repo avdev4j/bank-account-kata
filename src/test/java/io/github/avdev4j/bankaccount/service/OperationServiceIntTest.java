@@ -53,4 +53,12 @@ public class OperationServiceIntTest {
         Assertions.assertThat(accountUpdated.getBalance()).isEqualTo(new BigDecimal("260.00"));
     }
 
+    @Test
+    public void makeWithdrawalShouldAddOperationAndUpdateAccount() {
+        operationService.registerWithdrawal(account.getId(), new BigDecimal("250.00"));
+        Account accountUpdated = accountRepository.findById(account.getId()).get();
+
+        Assertions.assertThat(accountUpdated.getBalance()).isEqualTo(new BigDecimal("-240.00"));
+    }
+
 }
