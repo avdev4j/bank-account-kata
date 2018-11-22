@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class OperationService {
+public class OperationService implements DepositOperation, WithdrawalOperation {
 
     private final OperationRepository operationRepository;
     private final AccountService accountService;
@@ -28,7 +28,7 @@ public class OperationService {
     }
 
     public Operation registerWithdrawal(Long accountId, BigDecimal amount) {
-        Account account = accountService.withdrawal(accountId, amount);
+        Account account = accountService.withdraw(accountId, amount);
 
         Operation operation = generateWithdrawalOperation(account, amount);
 

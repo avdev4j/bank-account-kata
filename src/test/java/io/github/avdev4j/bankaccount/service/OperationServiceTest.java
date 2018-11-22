@@ -47,7 +47,7 @@ public class OperationServiceTest {
         when(accountService.findById(account.getId())).thenReturn(account);
         when(accountService.update(account)).then(returnsFirstArg());
         when(accountService.deposit(anyLong(), any())).thenReturn(account);
-        when(accountService.withdrawal(anyLong(), any())).thenReturn(account);
+        when(accountService.withdraw(anyLong(), any())).thenReturn(account);
         when(operationRepository.save(any())).then(returnsFirstArg());
     }
 

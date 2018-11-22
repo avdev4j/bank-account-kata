@@ -96,7 +96,7 @@ public class AccountServiceTest {
 
     @Test
     public void makeAWithdrawalOnAccountShouldReturnTheAccountUpdated() {
-        Account accountUpdated = accountService.withdrawal(accountId1, BigDecimal.ONE);
+        Account accountUpdated = accountService.withdraw(accountId1, BigDecimal.ONE);
 
         assertThat(accountUpdated.getBalance()).isEqualTo(new BigDecimal("99.00"));
     }

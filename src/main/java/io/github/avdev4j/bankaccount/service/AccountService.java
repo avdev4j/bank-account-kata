@@ -25,7 +25,7 @@ public class AccountService {
         return update(account);
     }
 
-    public Account withdrawal(Long id, BigDecimal amount) {
+    public Account withdraw(Long id, BigDecimal amount) {
         Account account = findById(id);
         account.setBalance(account.getBalance().subtract(amount));
 
