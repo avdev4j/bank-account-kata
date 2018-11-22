@@ -38,6 +38,12 @@ public class Account implements Serializable {
         this.balance = balance;
     }
 
+    public Account addToBalance(BigDecimal amount) {
+        setBalance(balance.add(amount));
+
+        return this;
+    }
+
     public User getUser() {
         return user;
     }

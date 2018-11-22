@@ -6,6 +6,7 @@ import io.github.avdev4j.bankaccount.web.rest.errors.AccountNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -22,7 +23,14 @@ public class AccountService {
             .orElseThrow(AccountNotFoundException::new);
     }
 
-    public Account update(Account account) {
+    public Account deposit(Long accountId, BigDecimal amount) {
+        Account account = findById(accountId);
+        account.addToBalance(amount);
+
+        return update(account);
+    }
+
+    protected Account update(Account account) {
         Assert.notNull(account.getBalance(), "the balance has to be defined");
 
         if (!accountRepository.existsById(account.getId())) {

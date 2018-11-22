@@ -49,12 +49,12 @@ public class AccountServiceTest {
 
         Account account1 = new Account();
         account1.setId(accountId1);
-        account1.setBalance(new BigDecimal("100.0"));
+        account1.setBalance(new BigDecimal("100.00"));
         account1.setUser(user);
 
         Account account2 = new Account();
         account2.setId(accountId2);
-        account2.setBalance(new BigDecimal("-100.0"));
+        account2.setBalance(new BigDecimal("-100.00"));
         account2.setUser(user);
 
         List<Account> accounts = new ArrayList<>();
@@ -73,7 +73,7 @@ public class AccountServiceTest {
 
         assertThat(account).isNotNull();
         assertThat(account.getId()).isEqualTo(accountId1);
-        assertThat(account.getBalance()).isEqualByComparingTo(new BigDecimal("100.0"));
+        assertThat(account.getBalance()).isEqualByComparingTo(new BigDecimal("100.00"));
     }
 
     @Test
@@ -85,6 +85,13 @@ public class AccountServiceTest {
             assertThat(e.getMessage()).isEqualTo("Account not found");
             assertThat(e.getStatus()).isEqualTo(Status.NOT_FOUND);
         }
+    }
+
+    @Test
+    public void makeADepositOnAAccountShouldReturnTheAccountUpdated() {
+        Account accountUpdated = accountService.deposit(accountId1, BigDecimal.ONE);
+
+        assertThat(accountUpdated.getBalance()).isEqualTo(new BigDecimal("101.00"));
     }
 
     @Test
@@ -130,9 +137,9 @@ public class AccountServiceTest {
 
         assertThat(accounts).isNotEmpty();
         assertThat(accounts.get(0).getId()).isEqualTo(accountId1);
-        assertThat(accounts.get(0).getBalance()).isEqualTo(new BigDecimal("100.0"));
+        assertThat(accounts.get(0).getBalance()).isEqualTo(new BigDecimal("100.00"));
         assertThat(accounts.get(1).getId()).isEqualTo(accountId2);
-        assertThat(accounts.get(1).getBalance()).isEqualTo(new BigDecimal("-100.0"));
+        assertThat(accounts.get(1).getBalance()).isEqualTo(new BigDecimal("-100.00"));
     }
 
 }
