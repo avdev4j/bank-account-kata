@@ -88,10 +88,17 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void makeADepositOnAAccountShouldReturnTheAccountUpdated() {
+    public void makeADepositOnAccountShouldReturnTheAccountUpdated() {
         Account accountUpdated = accountService.deposit(accountId1, BigDecimal.ONE);
 
         assertThat(accountUpdated.getBalance()).isEqualTo(new BigDecimal("101.00"));
+    }
+
+    @Test
+    public void makeAWithdrawalOnAccountShouldReturnTheAccountUpdated() {
+        Account accountUpdated = accountService.withdrawal(accountId1, BigDecimal.ONE);
+
+        assertThat(accountUpdated.getBalance()).isEqualTo(new BigDecimal("99.00"));
     }
 
     @Test

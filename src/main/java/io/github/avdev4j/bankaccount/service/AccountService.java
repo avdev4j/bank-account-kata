@@ -18,16 +18,23 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
+    public Account deposit(Long id, BigDecimal amount) {
+        Account account = findById(id);
+        account.setBalance(account.getBalance().add(amount));
+
+        return update(account);
+    }
+
+    public Account withdrawal(Long id, BigDecimal amount) {
+        Account account = findById(id);
+        account.setBalance(account.getBalance().subtract(amount));
+
+        return update(account);
+    }
+
     public Account findById(Long id) {
         return accountRepository.findById(id)
             .orElseThrow(AccountNotFoundException::new);
-    }
-
-    public Account deposit(Long accountId, BigDecimal amount) {
-        Account account = findById(accountId);
-        account.addToBalance(amount);
-
-        return update(account);
     }
 
     protected Account update(Account account) {
