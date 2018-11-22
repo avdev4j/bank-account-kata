@@ -25,7 +25,6 @@ public class OperationService implements DepositOperation, WithdrawalOperation {
             .orElseThrow(OperationNotFoundException::new);
     }
 
-
     public Operation registerDeposit(Long accountId, BigDecimal amount) {
         Account account = accountService.deposit(accountId, amount);
 
