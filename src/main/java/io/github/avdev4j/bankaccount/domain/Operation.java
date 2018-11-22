@@ -25,8 +25,8 @@ public class Operation implements Serializable {
     @Column(name = "amount", nullable = false, updatable = false)
     private BigDecimal amount;
 
-    @Column(name = "balance_before_operation", nullable = false, updatable = false)
-    private BigDecimal balanceBeforeOperation;
+    @Column(name = "balance_after_operation", nullable = false, updatable = false)
+    private BigDecimal balanceAfterOperation;
 
     @Column(name = "date", nullable = false, updatable = false)
     private Instant date = Instant.now();
@@ -59,12 +59,12 @@ public class Operation implements Serializable {
         this.amount = amount;
     }
 
-    public BigDecimal getBalanceBeforeOperation() {
-        return balanceBeforeOperation;
+    public BigDecimal getBalanceAfterOperation() {
+        return balanceAfterOperation;
     }
 
-    public void setBalanceBeforeOperation(BigDecimal balanceBeforeOperation) {
-        this.balanceBeforeOperation = balanceBeforeOperation;
+    public void setBalanceAfterOperation(BigDecimal balanceAfterOperation) {
+        this.balanceAfterOperation = balanceAfterOperation;
     }
 
     public Instant getDate() {

@@ -15,7 +15,7 @@
             <column name="amount" type="decimal(19,2)">
                 <constraints nullable="false"/>
             </column>
-            <column name="balance_before_operation" type="decimal(19,2)">
+            <column name="balance_after_operation" type="decimal(19,2)">
                 <constraints nullable="false"/>
             </column>
             <column name="date" type="timestamp">
