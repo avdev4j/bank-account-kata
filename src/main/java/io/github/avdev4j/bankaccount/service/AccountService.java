@@ -6,6 +6,8 @@ import io.github.avdev4j.bankaccount.web.rest.errors.AccountNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -28,5 +30,9 @@ public class AccountService {
         }
 
         return accountRepository.save(account);
+    }
+
+    public List<Account> findAllByUserId(Long userId) {
+        return accountRepository.findAllByUserId(userId);
     }
 }
