@@ -1,6 +1,7 @@
 package io.github.avdev4j.bankaccount.web.rest;
 
 import io.github.avdev4j.bankaccount.domain.Account;
+import io.github.avdev4j.bankaccount.domain.Operation;
 import io.github.avdev4j.bankaccount.service.AccountService;
 import io.github.avdev4j.bankaccount.service.OperationService;
 import org.springframework.http.HttpStatus;
@@ -29,5 +30,12 @@ public class BankAccountResource {
     @GetMapping("/bankaccounts")
     public ResponseEntity<List<Account>> getAllAccountsByUserId(@RequestParam Long userId) {
         return new ResponseEntity<>(accountService.findAllByUserId(userId), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/bankaccounts/{id}/operations")
+    public ResponseEntity<List<Operation>> getAllOperationByAccount(@PathVariable Long id) {
+        Account account = accountService.findById(id);
+        return ResponseEntity.ok(operationService.findAllByAccount(account));
     }
 }

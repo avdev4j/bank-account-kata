@@ -2,8 +2,11 @@ package io.github.avdev4j.bankaccount.web.rest;
 
 import io.github.avdev4j.bankaccount.BankAccountKataApp;
 import io.github.avdev4j.bankaccount.domain.Account;
+import io.github.avdev4j.bankaccount.domain.Operation;
 import io.github.avdev4j.bankaccount.domain.User;
+import io.github.avdev4j.bankaccount.enumeration.OperationType;
 import io.github.avdev4j.bankaccount.repository.AccountRepository;
+import io.github.avdev4j.bankaccount.repository.OperationRepository;
 import io.github.avdev4j.bankaccount.repository.UserRepository;
 import io.github.avdev4j.bankaccount.service.AccountService;
 import io.github.avdev4j.bankaccount.service.OperationService;
@@ -22,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -55,6 +59,9 @@ public class BankAccountResourceIntTest {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private OperationRepository operationRepository;
 
     private MockMvc restOperationMockMvc;
 
@@ -106,4 +113,36 @@ public class BankAccountResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").isArray());
     }
+
+
+    @Test
+    @Transactional
+    public void getAllOperationsByAccount() throws Exception {
+        Account account = new Account();
+        account.setId(1L);
+
+        Operation operation1 = new Operation();
+        operation1.setAccount(account);
+        operation1.setAmount(BigDecimal.ONE);
+        operation1.setType(OperationType.DEPOSIT);
+        operation1.setBalanceAfterOperation(new BigDecimal("11.00"));
+
+        operationRepository.save(operation1);
+
+        Operation operation2 = new Operation();
+        operation2.setAccount(account);
+        operation2.setAmount(BigDecimal.ONE);
+        operation2.setType(OperationType.WITHDRAWAL);
+        operation2.setBalanceAfterOperation(new BigDecimal("11.00"));
+
+        operationRepository.save(operation2);
+
+        restOperationMockMvc.perform(get("/api/bankaccounts/1/operations")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$").isArray());
+
+        assertThat(operationRepository.findAllByAccountId(1L)).size().isEqualTo(2);
+    }
+
 }
