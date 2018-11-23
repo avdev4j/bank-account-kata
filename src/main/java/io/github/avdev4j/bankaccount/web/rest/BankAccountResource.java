@@ -36,7 +36,6 @@ public class BankAccountResource {
         return ResponseEntity.ok(accounts);
     }
 
-
     @GetMapping("/bankaccounts/{id}/operations")
     public ResponseEntity<List<Operation>> getAllOperationByAccount(@PathVariable Long id) {
         Account account = accountService.findById(id);
