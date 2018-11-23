@@ -28,8 +28,12 @@ public class BankAccountResource {
     }
 
     @GetMapping("/bankaccounts")
-    public ResponseEntity<List<Account>> getAllAccountsByUserId(@RequestParam Long userId) {
-        return new ResponseEntity<>(accountService.findAllByUserId(userId), HttpStatus.OK);
+    public ResponseEntity<List<Account>> getAllAccounts(@RequestParam(required = false) Long userId) {
+        List<Account> accounts = (null == userId) ?
+            accountService.findAll() :
+            accountService.findAllByUserId(userId);
+
+        return ResponseEntity.ok(accounts);
     }
 
 
