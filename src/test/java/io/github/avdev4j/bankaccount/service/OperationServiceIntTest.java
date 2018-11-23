@@ -80,7 +80,6 @@ public class OperationServiceIntTest {
 
         operationRepository.save(operation2);
 
-
         List<Operation> operations = operationService.findAllByAccount(account);
 
         assertThat(operations).isNotEmpty();
