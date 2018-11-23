@@ -1,8 +1,8 @@
 package io.github.avdev4j.bankaccount.config;
 
-import io.github.avdev4j.bankaccount.security.*;
-import io.github.avdev4j.bankaccount.security.jwt.*;
-
+import io.github.avdev4j.bankaccount.security.AuthoritiesConstants;
+import io.github.avdev4j.bankaccount.security.jwt.JWTConfigurer;
+import io.github.avdev4j.bankaccount.security.jwt.TokenProvider;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -106,6 +106,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
+            .antMatchers("/api/bankaccounts/**").permitAll()
+            .antMatchers("/api/operations/**").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/info").permitAll()
