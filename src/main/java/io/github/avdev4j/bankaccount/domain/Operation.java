@@ -1,5 +1,6 @@
 package io.github.avdev4j.bankaccount.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.avdev4j.bankaccount.enumeration.OperationType;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class Operation implements Serializable {
     @Column(name = "date", nullable = false, updatable = false)
     private Instant date = Instant.now();
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;

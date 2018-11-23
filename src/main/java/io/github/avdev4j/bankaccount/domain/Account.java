@@ -1,5 +1,7 @@
 package io.github.avdev4j.bankaccount.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,6 +20,7 @@ public class Account implements Serializable {
     @Column(name = "balance", nullable = false)
     private BigDecimal balance;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
