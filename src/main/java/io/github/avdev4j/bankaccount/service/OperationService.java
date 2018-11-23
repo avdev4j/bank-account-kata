@@ -8,6 +8,9 @@ import io.github.avdev4j.bankaccount.web.rest.errors.OperationNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import static org.springframework.util.Assert.notNull;
 
 @Service
 public class OperationService implements DepositOperation, WithdrawalOperation {
@@ -57,5 +60,12 @@ public class OperationService implements DepositOperation, WithdrawalOperation {
         operation.setBalanceAfterOperation(account.getBalance());
 
         return operation;
+    }
+
+    public List<Operation> findAllByAccount(Account account) {
+        notNull(account, "The account must be defined");
+        notNull(account.getId(), "The account must have a valid Id");
+
+        return operationRepository.findAllByAccountId(account.getId());
     }
 }
