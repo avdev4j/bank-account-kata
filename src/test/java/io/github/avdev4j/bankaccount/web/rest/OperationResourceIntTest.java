@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -71,8 +70,6 @@ public class OperationResourceIntTest {
     @Test
     @Transactional
     public void addDepositOperation() throws Exception {
-        assertThat(operationRepository.findAll()).isEmpty();
-
         OperationVM operationVM = new OperationVM();
         operationVM.setAccountId(1L);
         operationVM.setAmount(new BigDecimal("100"));
@@ -80,16 +77,14 @@ public class OperationResourceIntTest {
         restOperationMockMvc.perform(post("/api/operations/deposit")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(operationVM)))
-            .andExpect(status().isCreated());
-
-        assertThat(operationRepository.findAll()).size().isEqualTo(1);
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.amount").value(operationVM.getAmount()))
+            .andExpect(jsonPath("$.type").value(OperationType.DEPOSIT.toString()));
     }
 
     @Test
     @Transactional
     public void addWithdrawOperation() throws Exception {
-        assertThat(operationRepository.findAll()).isEmpty();
-
         OperationVM operationVM = new OperationVM();
         operationVM.setAccountId(1L);
         operationVM.setAmount(new BigDecimal("100"));
@@ -97,9 +92,9 @@ public class OperationResourceIntTest {
         restOperationMockMvc.perform(post("/api/operations/withdraw")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(operationVM)))
-            .andExpect(status().isCreated());
-
-        assertThat(operationRepository.findAll()).size().isEqualTo(1);
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.amount").value(operationVM.getAmount()))
+            .andExpect(jsonPath("$.type").value(OperationType.WITHDRAWAL.toString()));
     }
 
     @Test
