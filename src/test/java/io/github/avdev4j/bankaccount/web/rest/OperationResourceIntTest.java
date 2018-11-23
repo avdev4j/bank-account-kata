@@ -1,7 +1,6 @@
 package io.github.avdev4j.bankaccount.web.rest;
 
 import io.github.avdev4j.bankaccount.BankAccountKataApp;
-import io.github.avdev4j.bankaccount.domain.Operation;
 import io.github.avdev4j.bankaccount.enumeration.OperationType;
 import io.github.avdev4j.bankaccount.repository.AccountRepository;
 import io.github.avdev4j.bankaccount.repository.OperationRepository;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -97,22 +95,4 @@ public class OperationResourceIntTest {
             .andExpect(jsonPath("$.type").value(OperationType.WITHDRAWAL.toString()));
     }
 
-    @Test
-    @Transactional
-    public void getById() throws Exception {
-        Operation operation = new Operation();
-        operation.setType(OperationType.DEPOSIT);
-        operation.setAmount(new BigDecimal("100"));
-        operation.setAccount(accountRepository.getOne(1L));
-        operation.setBalanceAfterOperation(new BigDecimal("200"));
-
-        operationRepository.save(operation);
-
-        restOperationMockMvc.perform(get("/api/operations/" + operation.getId())
-            .contentType(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.amount").value(operation.getAmount()))
-            .andExpect(jsonPath("$.type").value(operation.getType().toString()))
-            .andExpect(jsonPath("$.balanceAfterOperation").value(operation.getBalanceAfterOperation()));
-    }
 }
