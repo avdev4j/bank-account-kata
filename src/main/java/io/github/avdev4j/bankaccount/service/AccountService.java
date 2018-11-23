@@ -50,4 +50,8 @@ public class AccountService {
     public List<Account> findAllByUserId(Long userId) {
         return accountRepository.findAllByUserId(userId);
     }
+
+    public List<Account> findAll() {
+        return accountRepository.findAll();
+    }
 }
