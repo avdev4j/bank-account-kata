@@ -71,8 +71,9 @@ public class OperationResourceIntTest {
         OperationVM operationVM = new OperationVM();
         operationVM.setAccountId(1L);
         operationVM.setAmount(new BigDecimal("100"));
+        operationVM.setType(OperationType.DEPOSIT);
 
-        restOperationMockMvc.perform(post("/api/operations/deposit")
+        restOperationMockMvc.perform(post("/api/operations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(operationVM)))
             .andExpect(status().isCreated())
@@ -86,8 +87,9 @@ public class OperationResourceIntTest {
         OperationVM operationVM = new OperationVM();
         operationVM.setAccountId(1L);
         operationVM.setAmount(new BigDecimal("100"));
+        operationVM.setType(OperationType.WITHDRAWAL);
 
-        restOperationMockMvc.perform(post("/api/operations/withdraw")
+        restOperationMockMvc.perform(post("/api/operations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(operationVM)))
             .andExpect(status().isCreated())
